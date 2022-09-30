@@ -6,7 +6,7 @@
 
 using namespace std;
 
-static bool checkBoard(vector<vector<int>> Board);
+ 
 static bool generateSudoku(vector<vector<int>> &Board);
 
 class Sudoku
@@ -36,12 +36,23 @@ bool Sudoku::isComplete(void)
     }
     return true;
 }
-
+bool isComplete(vector<vector<int>> Board)
+{
+    for (int row = 0; row < 9; row++)
+    {
+        for (int col = 0; col < 9; col++)
+        {
+            if (Board[row][col] == 0)
+                return false;
+        }
+    }
+    return true;
+}
 bool Sudoku::isCorrect(void)
 {
     return Board == BoardAns;
 }
-
+ 
 vector<vector<int>> Sudoku::getBoard(void)
 {
     return Board;
@@ -64,15 +75,12 @@ bool valid(int i, int j, vector<vector<int>> Board, int value)
 
 void Sudoku::initialize(int difficulty = 3)
 {
-    generateSudoku(BoardAns);
-    while (difficulty>0){
-
-    }
+    generateSudoku(Board);
 };
 
 bool generateSudoku(vector<vector<int>> &Board)
 {
-    while (checkBoard(Board) == false)
+    while (isComplete(Board) == false)
     {
         for (int row = 0; row < 9; row++)
         {
@@ -104,60 +112,60 @@ bool generateSudoku(vector<vector<int>> &Board)
 }
 
 //return number of solution of the sudoku
-int solveSudoku(vector<vector<int>> &Board)
-{
-    vector<vector<vector<int>>> Candidates (9, vector<vector<int>>(9, vector<int> (9,1)));
-    vector<vector<int>> solutionList;
-    vector<int> solution;
-    for (int row = 0; row < 9; row++)
-    {
-        for (int col = 0; col < 9; col++)
-        {
-            if (Board[row][col] != 0)
-            {
-                int val = Board[row][col];
-                for (int i = 0; i< 9;i++){
-                    Candidates[row][i][val] = 0;
-                    Candidates[i][col][val] = 0;      
-                    Candidates[(row / 3) * 3 + (i / 3)][(col / 3) * 3 + (i % 3)][val] = 0;
-                }
-            }
-        }
-    }
+// int solveSudoku(vector<vector<int>> &Board)
+// {
+//     vector<vector<vector<int>>> Candidates (9, vector<vector<int>>(9, vector<int> (9,1)));
+//     vector<vector<int>> solutionList;
+//     vector<int> solution;
+//     for (int row = 0; row < 9; row++)
+//     {
+//         for (int col = 0; col < 9; col++)
+//         {
+//             if (Board[row][col] != 0)
+//             {
+//                 int val = Board[row][col];
+//                 for (int i = 0; i< 9;i++){
+//                     Candidates[row][i][val] = 0;
+//                     Candidates[i][col][val] = 0;      
+//                     Candidates[(row / 3) * 3 + (i / 3)][(col / 3) * 3 + (i % 3)][val] = 0;
+//                 }
+//             }
+//         }
+//     }
 
 
 
-    while (checkBoard(Board) == false)
-    {
-        for (int row = 0; row < 9; row++)
-        {
+//     while (checkBoard(Board) == false)
+//     {
+//         for (int row = 0; row < 9; row++)
+//         {
 
-            for (int col = 0; col < 9; col++)
-            {
+//             for (int col = 0; col < 9; col++)
+//             {
 
-                if (Board[row][col] == 0)
-                {
-                    for (int number = 1 ; number <= 9 ; number++ )
-                    {
-                        if (valid(row, col, Board, number))
-                        {
-                            // if (true){
-                            solution.push_back(number);
-                            Board[row][col] = number;
-                            if (solveSudoku(Board))
-                                return true;
-                            Board[row][col] = 0;
-                            solution.pop_back();
-                        }
-                    }
-                    return false;
-                }
-            }
-        }
-    }
+//                 if (Board[row][col] == 0)
+//                 {
+//                     for (int number = 1 ; number <= 9 ; number++ )
+//                     {
+//                         if (valid(row, col, Board, number))
+//                         {
+//                             // if (true){
+//                             solution.push_back(number);
+//                             Board[row][col] = number;
+//                             if (solveSudoku(Board))
+//                                 return true;
+//                             Board[row][col] = 0;
+//                             solution.pop_back();
+//                         }
+//                     }
+//                     return false;
+//                 }
+//             }
+//         }
+//     }
     
-    return solutionList.size();
-}
+//     return solutionList.size();
+// }
 
 int main()
 {
