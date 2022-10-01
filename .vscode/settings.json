@@ -44,6 +44,9 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "algorithm": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "set": "cpp",
+        "xtree": "cpp",
+        "map": "cpp"
     }
 }
