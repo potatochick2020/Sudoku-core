@@ -4,10 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <unordered_set>
 #include <stack>
 #include <map>
 
-// candidates should be data stucture of    map<pair<int,int>,vector<int>>
+ 
 
 
 using namespace std;
@@ -30,6 +31,52 @@ class Sudoku
         bool isCorrect(void);  // check a board is correct
        
 };
+ bool isValid(vector<vector<int>>& board) {
+    unordered_set<int> set;
+    int tar = 0;
+    //check horizontal
+    for (int i = 0;i<9;i++){
+        set.clear();
+        for (int j=0;j<9;j++){
+            if (board[i][j]!=tar && set.find(board[i][j])!=set.end()){
+                return false;
+            } else {
+                set.insert(board[i][j]);
+            }
+        }
+    }
+    //check vertical
+    for (int i = 0;i<9;i++){
+        set.clear();
+        for (int j=0;j<9;j++){
+            if (board[j][i]!=tar && set.find(board[j][i])!=set.end()){
+                return false;
+            } else {
+                set.insert(board[j][i]);
+            }
+        }
+    }
+    //check 3x3 box
+    for (int i = 0;i<3;i++){
+        for (int j=0;j<3;j++){
+            set.clear();
+            for (int k=0;k<3;k++){
+                for (int l=0;l<3;l++){
+                    if (board[i*3+k][j*3+l]!=tar && set.find(board[i*3+k][j*3+l])!=set.end()){
+                        return false;
+                    } else {
+                        set.insert(board[i*3+k][j*3+l]);
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+
+    return true;    
+}
 
 bool isComplete(vector<vector<int>> Board)
 {
@@ -69,13 +116,7 @@ bool isPlacable(int i, int j, vector<vector<int>> Board, int value)
     return true;
 }
 
-void Sudoku::initialize(int difficulty = 3)
-{
-    SolveSudoku(Board);
-    while (difficulty>0){
 
-    }
-};
 
 bool SolveSudoku(vector<vector<int>> &Board)
 {
@@ -110,152 +151,101 @@ bool SolveSudoku(vector<vector<int>> &Board)
     return true;
 }
 
-bool SolveSudokuFindNumberOfAnswer(vector<vector<int>> &Board ,map<pair<int,int>,vector<int>> CandidatesList, vector<pair<int,int>> &EmptyCellsList ,int &ans, int &count)
+int SudokuSolution(vector<vector<int>> &Board, int &ans )
 {
-    // for (auto Candidates : CandidatesList){
-    //     count ++ ;
-    //     int row = Candidates.first.first;
-    //     int col = Candidates.first.second;
-    //     visited.push({row,col});
-    //     for (auto Candidate : Candidates.second){
-    //         Board[row][col] = Candidate;
-    //         SolveSudokuFindNumberOfAnswer()
-    //     }
-    // }
-    while (isComplete(Board) == false)
+     
+    for (int row = 0; row < 9; row++)
     {
-        for (int row = 0; row < 9; row++)
+ 
+        for (int col = 0; col < 9; col++)
         {
-
-            for (int col = 0; col < 9; col++)
+ 
+            if (Board[row][col] == 0)
             {
-                 
-                if (Board[row][col] == 0)
+                vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                for (int number : numbers)
                 { 
-                    
-                    for (int number : CandidatesList[{row,col}])
+                    if (isPlacable(row, col, Board, number))
                     {
-                        if (isPlacable(row, col, Board, number))
-                        {
-                            Board[row][col] = number;
-                            if (isComplete(Board)){ 
-                                if (isCorrect(Board)) ans++;
-                                //Board[row][col] = 0; 
-                                // for (int i = 0;i<count;i++){
-                                //     auto ele = EmptyCellsList[EmptyCellsList.size()-1-i];
-                                //     Board[ele.first][ele.second] = 0;
-                                // }
-
-                                
-                            } 
-                            SolveSudokuFindNumberOfAnswer();
-                            Board[row][col] = number;
-                        }
-                    } 
-                }
-                
-            }
-                
-        }
-    }
-    return ans;
-}
-
-//return number of solution of the sudoku
-int SudokuSolution(vector<vector<int>> Board)
-{
-    vector<vector<vector<int>>> Candidates (9, vector<vector<int>>(9, vector<int> (9,1)));
-    vector<vector<int>> solutionList;
-    set<vector<vector<int>>> solution;
-    int ans;
-    stack<pair<int,int>> vistied;
-    //find all candidates of each cell;
-    vector<pair<int,int>>  EmptyCellsList
-
-    for (int row = 0; row < 9; row++)
-    {
-        for (int col = 0; col < 9; col++)
-        {
-            if (Board[row][col] != 0)
-            {
-                for(int counter = 0;counter<9;counter++)
-                    Candidates[row][col][counter] = 0;
-                int val = Board[row][col];
-                for (int i = 0; i< 9;i++){
-                    Candidates[row][i][val] = 0;
-                    Candidates[i][col][val] = 0;      
-                    Candidates[(row / 3) * 3 + (i / 3)][(col / 3) * 3 + (i % 3)][val] = 0;
-                }
-            }  else {
-                EmptyCellsList.push_back({row,col});
-            }
-        }
-    }
-
-    map<pair<int,int>,vector<int>> CandidatesList;
-
-    for (int row = 0; row < 9; row++)
-    {
-        for (int col = 0; col < 9; col++)
-        {
-            if (Board[row][col] != 0)
-            {
-                vector<int> cans;
-
-                for(int i = 0;i<9;i++){
-                    if (Candidates[row][col][i] == 1) cans.push_back(i);
-                }
-                    
-                 CandidatesList[{row,col}] = cans;
-            } 
-        }
-    }
-    vector<vector<int>> temp;
-
- label:
-
-    while (isComplete(temp) == false)
-    //if it is not fill in 
-    {
-        for (int row = 0; row < 9; row++)
-        {
-            for (int col = 0; col < 9; col++)
-            {
-
-                if (Board[row][col] == 0)
-                {
-                    for (auto number : Candidates[row][col])
-                    {
-                        //if filled
+                        Board[row][col] = number; 
                         
-                        if (isPlacable(row, col, Board, number))
-                        {
-                            // if (true){ 
-                            Board[row][col] = number;
-                            if (isComplete(Board)){
-                                if (SolveSudoku(Board)) 
-                                ans++;
-                                Board[row][col] = 0; 
-                            } 
-                            
-                           
-                        } 
-                        //if not filled
-                    goto label;
-                    } 
+                        if (isComplete(Board) && isValid(Board)){
+                            cout<<"this is complete and correct"<<row<<" "<<col<<" "<<number<<endl;
+                            ans++;
+                        } else {
+                            SudokuSolution(Board,ans);
+                        }
+                        Board[row][col] = 0;
+                        
+                    }
                 }
             }
         }
-    }
-    
+    } 
     return ans;
 }
 
+// set<vector<vector<int>>> SudokuSolution(vector<vector<int>> &Board, set<vector<vector<int>>> &ans )
+// {
+     
+//     for (int row = 0; row < 9; row++)
+//     {
+
+//         for (int col = 0; col < 9; col++)
+//         {
+
+//             if (Board[row][col] == 0)
+//             {
+//                 vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+//                 for (int number : numbers)
+//                 { 
+//                     if (isPlacable(row, col, Board, number))
+//                     {
+//                         Board[row][col] = number; 
+//                         cout<<"Place "<<row<<" "<<col<<" "<<number<<endl;
+//                         if (isComplete(Board)){
+//                             cout<<"Complete and Valid: Row"<<row<<" | Col "<<col<<" |Value"<<number<<endl;
+//                             ans.insert(Board);
+//                         } else {
+//                             SudokuSolution(Board,ans);
+//                         }
+//                         Board[row][col] = 0;
+//                         cout<<"Remove "<<row<<" "<<col<<" "<<number<<endl;
+                        
+//                     }
+//                 }
+//             }
+//         }
+//     } 
+//     return ans;
+// }
+
+void Sudoku::initialize(int difficulty = 3)
+{
+    SolveSudoku(Board); 
+    
+};
 int main()
 {
     Sudoku soduku;
-    soduku.initialize();
-    soduku.initialize(1);
+    soduku.initialize(1); 
+    vector<vector<int>>temp =  soduku.getBoard();
+    // set<vector<vector<int>>> ans ;
+    int ans = 0;
+    cout<<"empty row 1 | col 1 | value "<<temp[1][1]<<endl;
+    temp[1][1] = 0;
+    cout<<"empty row 1 | col 2 | value "<<temp[1][2]<<endl;
+    temp[1][2] = 0;
+    cout<<"empty row 1 | col 3 | value "<<temp[1][3]<<endl;
+    temp[1][3] = 0;
+    SudokuSolution(temp,ans);
+    
+    // temp[3] = {0,0,0,0,0,0,0,0,0};
+    // temp[4] = {0,0,0,0,0,0,0,0,0};
+    // temp[5] = {0,0,0,0,0,0,0,0,0};
+    // SudokuSolution(temp,ans);
+    // cout<<"ans:"<<ans.size()<<endl;
+    cout<<"ans:"<<ans<<endl;
     for (auto x : soduku.getBoard())
     {
         for (auto y : x)
