@@ -2,8 +2,12 @@
 A C++ library for generating, validating, solving, checking, etc Sudoku puzzle. 
 
 # Installation 
-'make sudoku.cpp'
-'./sudoku'
+
+```
+make sudoku
+
+./sudoku 
+```
 
 # Todo
 
@@ -19,7 +23,7 @@ This is my first CPP project, I don't think I wrote OOP code properly.
 
 - [ ] Optimised code for performance
 
-The function 'SudokuSolution()' is an enhanced version of [ leetcode - Sudoku solver ]( https://leetcode.com/problems/sudoku-solver/ )
+The function 'SudokuSolution()' is an enhanced version of [ leetcode - Sudoku solver ]( https://leetcode.com/problems/sudoku-solver/ ). My code might not be that optimised in terms of performance. 
 
 - [ ] Rename variable
 
