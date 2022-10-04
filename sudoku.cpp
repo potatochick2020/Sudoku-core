@@ -146,7 +146,7 @@ bool Sudoku::GenerateSudoku()
                     std::shuffle(numbers.begin(), numbers.end(), std::mt19937{std::random_device{}()});
                     for (int number : numbers)
                     {
-                        if (isPlacable(row, col, Board, number))
+                        if (isPlacable(row, col, number))
                         {
                             // if (true){
                             Board[row][col] = number;
@@ -177,7 +177,7 @@ int Sudoku::SudokuSolution()
                 vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
                 for (int number : numbers)
                 { 
-                    if (isPlacable(row, col, Board, number))
+                    if (isPlacable(row, col, number))
                     {
                         Board[row][col] = number; 
                         
@@ -227,28 +227,12 @@ int main()
 {
     Sudoku sudoku;
     sudoku.initialize(); 
-    vector<vector<int>> temp  =  vector<vector<int>>(9, vector<int>(9, 0));
-    
-    // cout<<"empty row 1 | col 1 | value "<<temp[1][1]<<endl;
-    // temp[1][1] = 0;
-    // cout<<"empty row 1 | col 2 | value "<<temp[1][2]<<endl;
-    // temp[1][2] = 0;
-    // cout<<"empty row 1 | col 3 | value "<<temp[1][3]<<endl;
-    // temp[1][3] = 0;
 
-    // temp[3] = {0,0,0,0,0,0,0,0,0};
-    // temp[4] = {0,0,0,0,0,0,0,0,0};
-    // temp[5] = {0,0,0,0,0,0,0,0,0};
- 
-    int ans = 0;
-    ans = sudoku.SudokuSolution();
-    cout<<"ans:"<<ans<<endl;
-    temp = sudoku.getBoard();
-    for (auto x : temp)
+    for (auto row : sudoku.getBoard())
     {
-        for (auto y : x)
+        for (auto val : row)
         {
-            cout << y << " | ";
+            cout << val << " | ";
         }
         cout << endl
              << "--------------------------------" << endl;
