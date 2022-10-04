@@ -5,7 +5,7 @@ A C++ library for generating, validating, solving, checking, etc Sudoku puzzle.
 
 ```
 make sudoku
-
+sudoku
 ./sudoku 
 ```
 
@@ -54,6 +54,4 @@ Once it is assigned,
 # Special thanks
 
 Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
-
-
-
+ 

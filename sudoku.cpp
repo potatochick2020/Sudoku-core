@@ -34,7 +34,8 @@ class Sudoku
         bool isComplete(void);  // check a board is correct
         bool isValid(void);  // check a board is correct
         bool isPlacable(int,int,int);
-       
+        Sudoku(){};
+        ~Sudoku(){};
 };
 
 bool Sudoku::isValid() {
