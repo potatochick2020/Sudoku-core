@@ -41,7 +41,7 @@ Print it properly? Probably it will be ideal that I could see obvious changes to
 
 - [ ] documentation 
 
-Provide Documentation on each function on what it does. Please also provide documentation on elaboration on the algorithm especially for 'SudokuSolution()' and 'initialize()'
+Provide Documentation on each function on what it does. Please also provide documentation on elaboration on the algorithm especially for *SudokuSolution()* and *initialize()*
 
 # How to start contribute
 
@@ -52,6 +52,8 @@ Once it is assigned,
 2. open a draft Pull Request
 
 # Special thanks
+
+Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
 
 
 
