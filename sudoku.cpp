@@ -8,13 +8,10 @@
 #include <stack>
 #include <map>
 
- 
-
-
 using namespace std;
 
 //static bool checkBoard(vector<vector<int>> Board);
-static bool generateSudoku(vector<vector<int>> &Board);
+static bool GenerateSudoku(vector<vector<int>> &Board);
 
 class Sudoku
 {
@@ -24,67 +21,63 @@ class Sudoku
         
 
     public:
-        void initialize(int);
+        void Initialize(int);
         int SudokuSolution(void);
-        vector<vector<int>> getBoard(void);
-        void setBoard(int, int, int);
-        void setBoard(vector<vector<int>>);
+        vector<vector<int>> GetBoard(void);
+        void SetBoard(int, int, int);
+        void SetBoard(vector<vector<int>>);
         //bool isComplete(void); // check whether a board had been completed, completed if there is no '0' in board
-        bool isCorrect(void);  // check a board is correct
-        bool isComplete(void);  // check a board is correct
-        bool isValid(void);  // check a board is correct
-        bool isPlacable(int,int,int);
+        bool IsCorrect(void);  // check a board is correct
+        bool IsComplete(void);  // check a board is correct
+        bool IsValid(void);  // check a board is correct
+        bool IsPlacable(int,int,int);
        
 };
 
-bool Sudoku::isValid() {
-    unordered_set<int> set;
-    int tar = 0;
+bool Sudoku::IsValid() {
+    unordered_set<int> store_values;
+    int target = 0;
     //check horizontal
-    for (int i = 0;i<9;i++){
-        set.clear();
-        for (int j=0;j<9;j++){
-            if (Board[i][j]!=tar && set.find(Board[i][j])!=set.end()){
+    for (int row = 0; row < 9; row++){
+        store_values.clear();
+        for (int col = 0;  col < 9; col++){
+            if (Board[row][col]!=target && store_values.find(Board[row][col])!=store_values.end()){
                 return false;
             } else {
-                set.insert(Board[i][j]);
+                store_values.insert(Board[row][col]);
             }
         }
     }
     //check vertical
-    for (int i = 0;i<9;i++){
-        set.clear();
-        for (int j=0;j<9;j++){
-            if (Board[j][i]!=tar && set.find(Board[j][i])!=set.end()){
+    for (int row = 0; row < 9 ; row++){
+        store_values.clear();
+        for (int col = 0;  col < 9; col++){
+            if (Board[col][row]!=target && store_values.find(Board[col][row])!=store_values.end()){
                 return false;
             } else {
-                set.insert(Board[j][i]);
+                store_values.insert(Board[col][row]);
             }
         }
     }
     //check 3x3 box
-    for (int i = 0;i<3;i++){
-        for (int j=0;j<3;j++){
-            set.clear();
-            for (int k=0;k<3;k++){
-                for (int l=0;l<3;l++){
-                    if (Board[i*3+k][j*3+l]!=tar && set.find(Board[i*3+k][j*3+l])!=set.end()){
+    for (int row = 0; row < 3; row++){
+        for (int col = 0; col < 3; col++){
+            store_values.clear();
+            for (int row_start =0; row_start<3 ; row_start++){
+                for (int col_start=0; col_start<3; col_start++){
+                    if (Board[row*3+row_start][col*3+col_start]!=target && store_values.find(Board[row*3+row_start][col*3+col_start])!=store_values.end()){
                         return false;
                     } else {
-                        set.insert(Board[i*3+k][j*3+l]);
-                    }
-                    
+                        store_values.insert(Board[row*3+row_start][col*3+col_start]);
+                    }        
                 }
-                
-            }
-            
+            } 
         }
     }
-
     return true;    
 }
 
-bool Sudoku::isComplete()
+bool Sudoku::IsComplete()
 {
     for (int row = 0; row < 9; row++)
     {
@@ -97,42 +90,41 @@ bool Sudoku::isComplete()
     return true;
 }
 
-bool Sudoku::isCorrect(void)
+bool Sudoku::IsCorrect(void)
 { 
-    return isValid() && isComplete();
+    return IsValid() && IsComplete();
 }
 
-vector<vector<int>> Sudoku::getBoard(void)
+vector<vector<int>> Sudoku::GetBoard(void)
 {
     return Board;
 };
 
-bool Sudoku::isPlacable(int i, int j, int value)
+bool Sudoku::IsPlacable(int row, int col, int value)
 {
-    for (int idx = 0; idx < 9; idx++)
+    for (int index = 0; index < 9; index++)
     {
-
-        if (Board[i][idx] == value)
+        if (Board[row][index] == value)
             return false;
-        if (Board[idx][j] == value)
+        if (Board[index][col] == value)
             return false;
-        if (Board[(i / 3) * 3 + (idx / 3)][(j / 3) * 3 + (idx % 3)] == value)
+        if (Board[(row / 3) * 3 + (index / 3)][(col / 3) * 3 + (index % 3)] == value)
             return false;
     }
     return true;
 }
 
-void Sudoku::setBoard(vector<vector<int>> newBoard){
+void Sudoku::SetBoard(vector<vector<int>> newBoard){
     Board = newBoard;
 }
 
-void Sudoku::setBoard(int row, int col, int value){
+void Sudoku::SetBoard(int row, int col, int value){
     Board[row][col] = value;
 }
 
 bool Sudoku::GenerateSudoku()
 {
-    while (isComplete() == false)
+    while (IsComplete() == false)
     {
         for (int row = 0; row < 9; row++)
         {
@@ -142,14 +134,14 @@ bool Sudoku::GenerateSudoku()
 
                 if (Board[row][col] == 0)
                 {
-                    vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-                    std::shuffle(numbers.begin(), numbers.end(), std::mt19937{std::random_device{}()});
-                    for (int number : numbers)
+                    vector<int> possible_values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                    std::shuffle(possible_values.begin(), possible_values.end(), std::mt19937{std::random_device{}()});
+                    for (int value : possible_values)
                     {
-                        if (isPlacable(row, col, number))
+                        if (IsPlacable(row, col, value))
                         {
                             // if (true){
-                            Board[row][col] = number;
+                            Board[row][col] = value;
                             if (Sudoku::GenerateSudoku())
                                 return true;
                             Board[row][col] = 0;
@@ -168,18 +160,16 @@ int Sudoku::SudokuSolution()
     int ans = 0;
     for (int row = 0; row < 9; row++)
     {
- 
         for (int col = 0; col < 9; col++)
         {
- 
             if (Board[row][col] == 0)
             {
-                vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-                for (int number : numbers)
+                vector<int> possible_values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                for (int value : possible_values)
                 { 
-                    if (isPlacable(row, col, number))
+                    if (IsPlacable(row, col, value))
                     {
-                        Board[row][col] = number; 
+                        Board[row][col] = value; 
                         
                         if (isCorrect()){ 
                             ans++;
@@ -192,13 +182,12 @@ int Sudoku::SudokuSolution()
                 } 
                 return ans;
             } 
-           
         }
     } 
    return 0;
 }
 
-void Sudoku::initialize(int difficulty = 3)
+void Sudoku::Initialize(int difficulty = 3)
 {
     GenerateSudoku(); 
     vector<int> rowsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
@@ -223,27 +212,19 @@ void Sudoku::initialize(int difficulty = 3)
         }
     }
 };
+
 int main()
 {
     Sudoku sudoku;
-    sudoku.initialize(); 
+    sudoku.Initialize(); 
 
-    vector<vector<int>>grid = sudoku.getBoard();
-    int N=grid.size();
-    for (int row = 0; row < N; row++){
-      for (int col = 0; col < N; col++){
-         if(col == 3 || col == 6)
-            cout << " | ";
-         cout << grid[row][col] <<" ";
-      }
-      if(row == 2 || row == 5){
-         cout << endl;
-         for(int i = 0; i<N; i++)
-            cout << "---";
-      }
-      cout << endl;
-   }
-    
-}
-
- 
+    for (auto row : sudoku.GetBoard())
+    {
+        for (auto val : row)
+        {
+            cout << val << " | ";
+        }
+        cout << endl
+             << "--------------------------------" << endl;
+    } 
+} 
