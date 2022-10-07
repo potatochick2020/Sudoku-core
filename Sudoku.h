@@ -8,15 +8,18 @@
 #include <unordered_set>
 #include <stack>
 #include <map>
+#include "Board.h"
 
 using namespace std;
 
-class Sudoku
+class Sudoku : Board
 {
 private:
-	vector<vector<int>> board = vector<vector<int>>(9, vector<int>(9, 0));
+
 	bool GenerateSudoku(void);
 public:
+	Sudoku(int boardHeight = 9, int boardWidth = 9);
+
 	// default argument only in decleration
 	void initialize(int difficulty = 3);
 
@@ -30,4 +33,5 @@ public:
 	bool isPlacable(int, int, int);
 
 	int SudokuSolution(void);
+	virtual void DrawBoard();
 };

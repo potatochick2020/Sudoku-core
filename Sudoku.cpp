@@ -1,5 +1,7 @@
 #include "Sudoku.h"
 
+Sudoku::Sudoku(int boardHeight, int boardWidth) : Board(boardHeight, boardWidth) {}
+
 bool Sudoku::isValid() {
 	unordered_set<int> set;
 	int tar = 0;
@@ -188,3 +190,7 @@ void Sudoku::initialize(int difficulty)
 		}
 	}
 };
+
+void Sudoku::DrawBoard() {
+
+}
