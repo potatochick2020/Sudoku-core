@@ -79,7 +79,6 @@ bool Sudoku::isPlacable(int i, int j, int value)
 {
 	for (int idx = 0; idx < 9; idx++)
 	{
-
 		if (board[i][idx] == value)
 			return false;
 		if (board[idx][j] == value)
@@ -100,6 +99,8 @@ void Sudoku::setBoard(int row, int col, int value) {
 
 bool Sudoku::GenerateSudoku()
 {
+	vector<int> numbers(9);
+
 	while (isComplete() == false)
 	{
 		for (int row = 0; row < 9; row++)
@@ -110,8 +111,9 @@ bool Sudoku::GenerateSudoku()
 
 				if (board[row][col] == 0)
 				{
-					vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-					shuffle(numbers.begin(), numbers.end(), mt19937{ random_device{}() });
+					// fills out the numbers vector with numbers from 1 -> numbers.size()
+					iota(begin(numbers), end(numbers), 1);
+					SHUFFLE(numbers);
 					for (int number : numbers)
 					{
 						if (isPlacable(row, col, number))
@@ -134,7 +136,10 @@ bool Sudoku::GenerateSudoku()
 int Sudoku::SudokuSolution()
 {
 	int ans = 0;
-	vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	vector<int> numbers(9);
+
+	// fills out the numbers vector with numbers from 1 -> numbers.size()
+	iota(begin(numbers), end(numbers), 1);
 	for (int row = 0; row < 9; row++)
 	{
 
@@ -168,20 +173,22 @@ int Sudoku::SudokuSolution()
 void Sudoku::initialize(int difficulty)
 {
 	GenerateSudoku();
-	vector<int> rowsCandidates = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-	shuffle(rowsCandidates.begin(), rowsCandidates.end(), mt19937{ random_device{}() });
-	vector<int> colsCandidates = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-	shuffle(colsCandidates.begin(), colsCandidates.end(), mt19937{ random_device{}() });
+	vector<int> rowsCandidates = CANDIDATE_ARRAY;
+	SHUFFLE(rowsCandidates);
+	vector<int> colsCandidates = CANDIDATE_ARRAY;
+	SHUFFLE(colsCandidates);
 	pair<pair<int, int>, int> backup = { {rowsCandidates[0],colsCandidates[0]},board[rowsCandidates[0]][colsCandidates[0]] };
 	board[rowsCandidates[0]][colsCandidates[0]] = 0;
 
 	int attempt = 0;
 	while (attempt < difficulty) {
 
-		vector<int> rowsCandidates = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-		shuffle(rowsCandidates.begin(), rowsCandidates.end(), mt19937{ random_device{}() });
-		vector<int> colsCandidates = { 1, 2, 3, 4, 5, 6, 7, 8, 0 };
-		shuffle(colsCandidates.begin(), colsCandidates.end(), mt19937{ random_device{}() });
+		rowsCandidates = CANDIDATE_ARRAY;
+		SHUFFLE(rowsCandidates);
+
+		colsCandidates = CANDIDATE_ARRAY;
+		SHUFFLE(colsCandidates);
+
 		backup = { {rowsCandidates[0],colsCandidates[0]},board[rowsCandidates[0]][colsCandidates[0]] };
 		board[rowsCandidates[0]][colsCandidates[0]] = 0;
 		if (SudokuSolution() > 1) {

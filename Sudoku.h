@@ -8,7 +8,11 @@
 #include <unordered_set>
 #include <stack>
 #include <map>
+#include <numeric>
 #include "Board.h"
+
+#define SHUFFLE(x) shuffle(x.begin(), x.end(), mt19937{ random_device{}() });
+#define CANDIDATE_ARRAY { 1, 2, 3, 4, 5, 6, 7, 8, 0 }
 
 using namespace std;
 
