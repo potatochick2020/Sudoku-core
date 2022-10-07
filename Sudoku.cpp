@@ -199,5 +199,18 @@ void Sudoku::initialize(int difficulty)
 };
 
 void Sudoku::DrawBoard() {
-
+	// this implementation done by @AshishRaikwar1290
+	for (int row = 0; row < boardHeight; row++) {
+		for (int col = 0; col < boardHeight; col++) {
+			if (col == 3 || col == 6)
+				cout << " | ";
+			cout << board[row][col] << " ";
+		}
+		if (row == 2 || row == 5) {
+			cout << endl;
+			for (int i = 0; i < boardHeight; i++)
+				cout << "---";
+		}
+		cout << endl;
+	}
 }
