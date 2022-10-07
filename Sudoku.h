@@ -16,7 +16,7 @@
 
 using namespace std;
 
-class Sudoku : Board
+class Sudoku : public Board
 {
 private:
 
@@ -27,9 +27,10 @@ public:
 	// default argument only in decleration
 	void initialize(int difficulty = 3);
 
+	//overloading for a Board::setBoard 
 	void setBoard(int, int, int);
 	void setBoard(vector<vector<int>>);
-	vector<vector<int>> getBoard(void);
+	virtual void drawBoard();
 
 	bool isCorrect(void);
 	bool isComplete(void);
@@ -37,5 +38,4 @@ public:
 	bool isPlacable(int, int, int);
 
 	int SudokuSolution(void);
-	virtual void DrawBoard();
 };

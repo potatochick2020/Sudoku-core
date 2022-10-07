@@ -70,11 +70,6 @@ bool Sudoku::isCorrect(void)
 	return isValid() && isComplete();
 }
 
-vector<vector<int>> Sudoku::getBoard(void)
-{
-	return board;
-};
-
 bool Sudoku::isPlacable(int i, int j, int value)
 {
 	for (int idx = 0; idx < 9; idx++)
@@ -87,10 +82,6 @@ bool Sudoku::isPlacable(int i, int j, int value)
 			return false;
 	}
 	return true;
-}
-
-void Sudoku::setBoard(vector<vector<int>> newBoard) {
-	board = newBoard;
 }
 
 void Sudoku::setBoard(int row, int col, int value) {
@@ -198,7 +189,7 @@ void Sudoku::initialize(int difficulty)
 	}
 };
 
-void Sudoku::DrawBoard() {
+void Sudoku::drawBoard() {
 	// this implementation done by @AshishRaikwar1290
 	for (int row = 0; row < boardHeight; row++) {
 		for (int col = 0; col < boardHeight; col++) {

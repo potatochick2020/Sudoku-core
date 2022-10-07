@@ -4,6 +4,6 @@ int main()
 {
 	Sudoku sudoku;
 	sudoku.initialize();
-	sudoku.DrawBoard();
+	sudoku.drawBoard();
 }
 
