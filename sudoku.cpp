@@ -25,16 +25,16 @@ class Sudoku
         int sudoku_solution(void);
         vector<vector<int>> get_board(void);
         void set_board(int, int, int);
-        void SetBoard(vector<vector<int>>);
-        //bool isComplete(void); // check whether a board had been completed, completed if there is no '0' in board
-        bool IsCorrect(void);  // check a board is correct
-        bool IsComplete(void);  // check a board is correct
-        bool IsValid(void);  // check a board is correct
-        bool IsPlacable(int,int,int);
+        void set_board(vector<vector<int>>);
+        //bool is_complete(void); // check whether a board had been completed, completed if there is no '0' in board
+        bool is_correct(void);  // check a board is correct
+        bool is_complete(void);  // check a board is correct
+        bool is_valid(void);  // check a board is correct
+        bool is_placeable(int,int,int);
        
 };
 
-bool Sudoku::IsValid() {
+bool Sudoku::is_valid() {
     unordered_set<int> store_values;
     int target = 0;
     //check horizontal
@@ -77,7 +77,7 @@ bool Sudoku::IsValid() {
     return true;    
 }
 
-bool Sudoku::IsComplete()
+bool Sudoku::is_complete()
 {
     for (int row = 0; row < 9; row++)
     {
@@ -90,9 +90,9 @@ bool Sudoku::IsComplete()
     return true;
 }
 
-bool Sudoku::IsCorrect(void)
+bool Sudoku::is_correct(void)
 { 
-    return IsValid() && IsComplete();
+    return is_valid() && is_complete();
 }
 
 vector<vector<int>> Sudoku::get_board(void)
@@ -100,7 +100,7 @@ vector<vector<int>> Sudoku::get_board(void)
     return Board;
 };
 
-bool Sudoku::IsPlacable(int row, int col, int value)
+bool Sudoku::is_placeable(int row, int col, int value)
 {
     for (int index = 0; index < 9; index++)
     {
@@ -124,7 +124,7 @@ void Sudoku::set_board(int row, int col, int value){
 
 bool Sudoku::generate_sudoku()
 {
-    while (IsComplete() == false)
+    while (is_complete() == false)
     {
         for (int row = 0; row < 9; row++)
         {
@@ -134,15 +134,15 @@ bool Sudoku::generate_sudoku()
 
                 if (Board[row][col] == 0)
                 {
-                    vector<int> possible_values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-                    std::shuffle(possible_values.begin(), possible_values.end(), std::mt19937{std::random_device{}()});
-                    for (int value : possible_values)
+                    vector<int> candidates = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                    std::shuffle(candidates.begin(), candidates.end(), std::mt19937{std::random_device{}()});
+                    for (int value : candidates)
                     {
-                        if (IsPlacable(row, col, value))
+                        if (is_placeable(row, col, value))
                         {
                             // if (true){
                             Board[row][col] = value;
-                            if (Sudoku::GenerateSudoku())
+                            if (Sudoku::generate_sudoku())
                                 return true;
                             Board[row][col] = 0;
                         }
@@ -164,17 +164,17 @@ int Sudoku::sudoku_solution()
         {
             if (Board[row][col] == 0)
             {
-                vector<int> possible_values = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-                for (int value : possible_values)
+                vector<int> candidates = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                for (int value : candidates)
                 { 
-                    if (IsPlacable(row, col, value))
+                    if (is_placeable(row, col, value))
                     {
                         Board[row][col] = value; 
                         
-                        if (isCorrect()){ 
+                        if (is_correct()){ 
                             ans++;
                         } else {
-                            ans += Sudoku::SudokuSolution();
+                            ans += Sudoku::sudoku_solution();
                         }
                         Board[row][col] = 0;
                         
@@ -190,22 +190,22 @@ int Sudoku::sudoku_solution()
 void Sudoku::initialize(int difficulty = 3)
 {
     generate_sudoku(); 
-    vector<int> rowsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
-    std::shuffle(rowsCandidates.begin(), rowsCandidates.end(), std::mt19937{std::random_device{}()});
-    vector<int> colsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
-    std::shuffle(colsCandidates.begin(), colsCandidates.end(), std::mt19937{std::random_device{}()});
-    pair<pair<int,int>,int> backup = {{rowsCandidates[0],colsCandidates[0]},Board[rowsCandidates[0]][colsCandidates[0]]};
-    Board[rowsCandidates[0]][colsCandidates[0]] = 0;
+    vector<int> row_candidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    std::shuffle(row_candidates.begin(), row_candidates.end(), std::mt19937{std::random_device{}()});
+    vector<int> col_candidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+    std::shuffle(col_candidates.begin(), col_candidates.end(), std::mt19937{std::random_device{}()});
+    pair<pair<int,int>,int> backup = {{row_candidates[0],col_candidates[0]},Board[row_candidates[0]][col_candidates[0]]};
+    Board[row_candidates[0]][col_candidates[0]] = 0;
     
     int attempt = 0;
     while (attempt<difficulty){
         
-        vector<int> rowsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
-        std::shuffle(rowsCandidates.begin(), rowsCandidates.end(), std::mt19937{std::random_device{}()});
-        vector<int> colsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
-        std::shuffle(colsCandidates.begin(), colsCandidates.end(), std::mt19937{std::random_device{}()});
-        backup = {{rowsCandidates[0],colsCandidates[0]},Board[rowsCandidates[0]][colsCandidates[0]]};
-        Board[rowsCandidates[0]][colsCandidates[0]] = 0;
+        vector<int> row_candidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+        std::shuffle(row_candidates.begin(), row_candidates.end(), std::mt19937{std::random_device{}()});
+        vector<int> col_candidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
+        std::shuffle(col_candidates.begin(), col_candidates.end(), std::mt19937{std::random_device{}()});
+        backup = {{row_candidates[0],col_candidates[0]},Board[row_candidates[0]][col_candidates[0]]};
+        Board[row_candidates[0]][col_candidates[0]] = 0;
         if (sudoku_solution() > 1){
             Board[backup.first.first][backup.first.second] = backup.second;
             attempt++;
