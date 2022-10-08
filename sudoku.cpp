@@ -11,20 +11,20 @@
 using namespace std;
 
 //static bool checkBoard(vector<vector<int>> Board);
-static bool GenerateSudoku(vector<vector<int>> &Board);
+static bool generate_sudoku(vector<vector<int>> &Board);
 
 class Sudoku
 {
     private:
         vector<vector<int>> Board = vector<vector<int>>(9, vector<int>(9, 0)); 
-        bool GenerateSudoku(void);
+        bool generate_sudoku(void);
         
 
     public:
-        void Initialize(int);
-        int SudokuSolution(void);
-        vector<vector<int>> GetBoard(void);
-        void SetBoard(int, int, int);
+        void initialize(int);
+        int sudoku_solution(void);
+        vector<vector<int>> get_board(void);
+        void set_board(int, int, int);
         void SetBoard(vector<vector<int>>);
         //bool isComplete(void); // check whether a board had been completed, completed if there is no '0' in board
         bool IsCorrect(void);  // check a board is correct
@@ -95,7 +95,7 @@ bool Sudoku::IsCorrect(void)
     return IsValid() && IsComplete();
 }
 
-vector<vector<int>> Sudoku::GetBoard(void)
+vector<vector<int>> Sudoku::get_board(void)
 {
     return Board;
 };
@@ -114,15 +114,15 @@ bool Sudoku::IsPlacable(int row, int col, int value)
     return true;
 }
 
-void Sudoku::SetBoard(vector<vector<int>> newBoard){
+void Sudoku::set_board(vector<vector<int>> newBoard){
     Board = newBoard;
 }
 
-void Sudoku::SetBoard(int row, int col, int value){
+void Sudoku::set_board(int row, int col, int value){
     Board[row][col] = value;
 }
 
-bool Sudoku::GenerateSudoku()
+bool Sudoku::generate_sudoku()
 {
     while (IsComplete() == false)
     {
@@ -155,7 +155,7 @@ bool Sudoku::GenerateSudoku()
     return true;
 }
 
-int Sudoku::SudokuSolution()
+int Sudoku::sudoku_solution()
 {
     int ans = 0;
     for (int row = 0; row < 9; row++)
@@ -187,9 +187,9 @@ int Sudoku::SudokuSolution()
    return 0;
 }
 
-void Sudoku::Initialize(int difficulty = 3)
+void Sudoku::initialize(int difficulty = 3)
 {
-    GenerateSudoku(); 
+    generate_sudoku(); 
     vector<int> rowsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
     std::shuffle(rowsCandidates.begin(), rowsCandidates.end(), std::mt19937{std::random_device{}()});
     vector<int> colsCandidates = {1, 2, 3, 4, 5, 6, 7, 8, 0};
@@ -206,7 +206,7 @@ void Sudoku::Initialize(int difficulty = 3)
         std::shuffle(colsCandidates.begin(), colsCandidates.end(), std::mt19937{std::random_device{}()});
         backup = {{rowsCandidates[0],colsCandidates[0]},Board[rowsCandidates[0]][colsCandidates[0]]};
         Board[rowsCandidates[0]][colsCandidates[0]] = 0;
-        if (SudokuSolution() > 1){
+        if (sudoku_solution() > 1){
             Board[backup.first.first][backup.first.second] = backup.second;
             attempt++;
         }
@@ -216,9 +216,9 @@ void Sudoku::Initialize(int difficulty = 3)
 int main()
 {
     Sudoku sudoku;
-    sudoku.Initialize(); 
+    sudoku.initialize(); 
 
-    for (auto row : sudoku.GetBoard())
+    for (auto row : sudoku.get_board())
     {
         for (auto val : row)
         {
