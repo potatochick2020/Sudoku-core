@@ -218,7 +218,6 @@ int main()
     Sudoku sudoku;
     sudoku.initialize(); 
 
-    
     vector<vector<int>>grid = sudoku.get_board();
     int N=grid.size();
     for (int row = 0; row < N; row++){
@@ -234,15 +233,5 @@ int main()
       }
       cout << endl;
    }
-
+    
 }
-    for (auto row : sudoku.get_board())
-    {
-        for (auto val : row)
-        {
-            cout << val << " | ";
-        }
-        cout << endl
-             << "--------------------------------" << endl;
-    } 
-} 
