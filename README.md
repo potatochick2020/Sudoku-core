@@ -6,15 +6,15 @@ A C++ library for generating, validating, solving, checking, etc Sudoku puzzle.
 ```
 make sudoku
 
-./sudoku 
+./sudoku.o
 ```
 
 # Todo
 
 ## Code
 
-- [ ] Create Header files
-  
+- [x] Create Header files
+
 As what it stated ...
 
 - [ ] Reorganize code using OOP approach
@@ -29,7 +29,7 @@ The function 'SudokuSolution()' is an enhanced version of [ leetcode - Sudoku so
 
 I wrote this in a rush , some variable is not named properly and are not consistent. rename it with meaningful variable name
 
-- [ ] Testing
+- [x] Testing
 
 Testing is important. Any testing framework is fine but personally prefer bash scripting to test out the function.
 
@@ -54,6 +54,4 @@ Once it is assigned,
 # Special thanks
 
 Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
-
-
 

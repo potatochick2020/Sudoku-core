@@ -1,4 +1,5 @@
 #include "Board.h"
+
 Board::Board(int boardHeight, int boardWidth) {
 	this->boardHeight = boardHeight;
 	this->boardWidth = boardWidth;
