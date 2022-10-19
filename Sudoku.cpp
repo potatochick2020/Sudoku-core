@@ -84,6 +84,10 @@ bool Sudoku::isPlacable(int i, int j, int value)
 	return true;
 }
 
+void Sudoku::setBoard(vector<vector<int>> newBoard) {
+    board = newBoard;
+}
+
 void Sudoku::setBoard(int row, int col, int value) {
 	board[row][col] = value;
 }

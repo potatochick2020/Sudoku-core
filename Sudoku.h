@@ -27,7 +27,7 @@ public:
 	// default argument only in decleration
 	void initialize(int difficulty = 3);
 
-	//overloading for a Board::setBoard 
+	//overloading for a Board::setBoard
 	void setBoard(int, int, int);
 	void setBoard(vector<vector<int>>);
 	virtual void drawBoard();
