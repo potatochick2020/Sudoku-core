@@ -4,9 +4,9 @@ A C++ library for generating, validating, solving, checking, etc Sudoku puzzle.
 # Installation 
 
 ```
-make sudoku
+clang++ -std="c++20" -o sudoku Main.cpp Sudoku.cpp Board.cpp
 
-./sudoku 
+./sudoku
 ```
 
 # Todo
