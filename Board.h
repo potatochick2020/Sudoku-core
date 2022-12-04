@@ -8,11 +8,9 @@ class Board
 protected:
 	vector<vector<int>> board;
 	int boardWidth, boardHeight;
-
 	Board(int, int);
 	// Abstaract function that must be defined by children
 	virtual void drawBoard() = 0;
-
 public:
 	vector<vector<int>> getBoard();
 	void setBoard(vector<vector<int>> newBoard);

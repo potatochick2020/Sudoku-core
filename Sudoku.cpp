@@ -2,50 +2,62 @@
 
 Sudoku::Sudoku(int boardHeight, int boardWidth) : Board(boardHeight, boardWidth) {}
 
-bool Sudoku::isValid() {
+bool Sudoku::isValid()
+{
 	unordered_set<int> set;
 	int tar = 0;
-	//check horizontal
-	for (int i = 0; i < 9; i++) {
+	// check horizontal
+	for (int i = 0; i < 9; i++)
+	{
 		set.clear();
-		for (int j = 0; j < 9; j++) {
-			if (board[i][j] != tar && set.find(board[i][j]) != set.end()) {
+		for (int j = 0; j < 9; j++)
+		{
+			if (board[i][j] != tar && set.find(board[i][j]) != set.end())
+			{
 				return false;
 			}
-			else {
+			else
+			{
 				set.insert(board[i][j]);
 			}
 		}
 	}
-	//check vertical
-	for (int i = 0; i < 9; i++) {
+	// check vertical
+	for (int i = 0; i < 9; i++)
+	{
 		set.clear();
-		for (int j = 0; j < 9; j++) {
-			if (board[j][i] != tar && set.find(board[j][i]) != set.end()) {
+		for (int j = 0; j < 9; j++)
+		{
+			if (board[j][i] != tar && set.find(board[j][i]) != set.end())
+			{
 				return false;
 			}
-			else {
+			else
+			{
 				set.insert(board[j][i]);
 			}
 		}
 	}
-	//check 3x3 box
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	// check 3x3 box
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
 			set.clear();
-			for (int k = 0; k < 3; k++) {
-				for (int l = 0; l < 3; l++) {
-					if (board[i * 3 + k][j * 3 + l] != tar && set.find(board[i * 3 + k][j * 3 + l]) != set.end()) {
+			for (int k = 0; k < 3; k++)
+			{
+				for (int l = 0; l < 3; l++)
+				{
+					if (board[i * 3 + k][j * 3 + l] != tar && set.find(board[i * 3 + k][j * 3 + l]) != set.end())
+					{
 						return false;
 					}
-					else {
+					else
+					{
 						set.insert(board[i * 3 + k][j * 3 + l]);
 					}
-
 				}
-
 			}
-
 		}
 	}
 
@@ -84,7 +96,8 @@ bool Sudoku::isPlacable(int i, int j, int value)
 	return true;
 }
 
-void Sudoku::setBoard(int row, int col, int value) {
+void Sudoku::setBoard(int row, int col, int value)
+{
 	board[row][col] = value;
 }
 
@@ -150,12 +163,10 @@ int Sudoku::SudokuSolution()
 							ans += Sudoku::SudokuSolution();
 
 						board[row][col] = 0;
-
 					}
 				}
 				return ans;
 			}
-
 		}
 	}
 	return 0;
@@ -168,11 +179,12 @@ void Sudoku::initialize(int difficulty)
 	SHUFFLE(rowsCandidates);
 	vector<int> colsCandidates = CANDIDATE_ARRAY;
 	SHUFFLE(colsCandidates);
-	pair<pair<int, int>, int> backup = { {rowsCandidates[0],colsCandidates[0]},board[rowsCandidates[0]][colsCandidates[0]] };
+	pair<pair<int, int>, int> backup = {{rowsCandidates[0], colsCandidates[0]}, board[rowsCandidates[0]][colsCandidates[0]]};
 	board[rowsCandidates[0]][colsCandidates[0]] = 0;
 
 	int attempt = 0;
-	while (attempt < difficulty) {
+	while (attempt < difficulty)
+	{
 
 		rowsCandidates = CANDIDATE_ARRAY;
 		SHUFFLE(rowsCandidates);
@@ -180,24 +192,29 @@ void Sudoku::initialize(int difficulty)
 		colsCandidates = CANDIDATE_ARRAY;
 		SHUFFLE(colsCandidates);
 
-		backup = { {rowsCandidates[0],colsCandidates[0]},board[rowsCandidates[0]][colsCandidates[0]] };
+		backup = {{rowsCandidates[0], colsCandidates[0]}, board[rowsCandidates[0]][colsCandidates[0]]};
 		board[rowsCandidates[0]][colsCandidates[0]] = 0;
-		if (SudokuSolution() > 1) {
+		if (SudokuSolution() > 1)
+		{
 			board[backup.first.first][backup.first.second] = backup.second;
 			attempt++;
 		}
 	}
 };
 
-void Sudoku::drawBoard() {
+void Sudoku::drawBoard()
+{
 	// this implementation done by @AshishRaikwar1290
-	for (int row = 0; row < boardHeight; row++) {
-		for (int col = 0; col < boardHeight; col++) {
+	for (int row = 0; row < boardHeight; row++)
+	{
+		for (int col = 0; col < boardHeight; col++)
+		{
 			if (col == 3 || col == 6)
 				cout << " | ";
 			cout << board[row][col] << " ";
 		}
-		if (row == 2 || row == 5) {
+		if (row == 2 || row == 5)
+		{
 			cout << endl;
 			for (int i = 0; i < boardHeight; i++)
 				cout << "---";
