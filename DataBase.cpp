@@ -2,8 +2,15 @@
 
 int createDB(const char* s)
 {
+    if (sqlite3_threadsafe() > 0) {
+        int retCode = sqlite3_config(SQLITE_CONFIG_SERIALIZED);
+        
+    } else {
+        std::cout<<"not safe";
+    }
+
 	sqlite3* DB;
-	
+	sqlite3_initialize();
 	int exit = 0;
 	exit = sqlite3_open(s, &DB);
 
@@ -19,7 +26,7 @@ int createTable(const char* s)
 
 	std::string sql = "CREATE TABLE IF NOT EXISTS Sudoku("
 		"ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-		"SudokuValue BLOB NOT NULL  );"; //This will be a 81 digit unsigned integer holding a flatten Sudoku
+		"SudokuValue BLOB NOT NULL UNIQUE );"; //This will be a 81 digit unsigned integer holding a flatten Sudoku
 	try
 	{
 		int exit = 0;
@@ -48,7 +55,7 @@ int insertData(const char* s , std::string query)
 	char* messageError;
 		
 	std::string sql(query); 
-
+    std::cout<<query<<std::endl;
 	int exit = sqlite3_open(s, &DB);
 	/* An open database, SQL to be evaluated, Callback function, 1st argument to callback, Error msg written here */
 	exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
