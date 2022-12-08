@@ -4,53 +4,20 @@ A C++ library for generating, validating, solving, checking, etc Sudoku puzzle.
 # Installation 
 
 ```
-clang++ -std="c++20" -o sudoku Main.cpp Sudoku.cpp Board.cpp
+//to edit
 
-./sudoku
 ```
 
-# Todo
+# To Do
 
-## Code
+finish threadsafe sql queue
+put this in private of database connection
 
-- [ ] Create Header files
-  
-As what it stated ...
+write test  
+https://github.com/CS144/sponge/blob/lab1-startercode/CMakeLists.txt
+https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html
 
-- [ ] Reorganize code using OOP approach
-
-This is my first CPP project, I don't think I wrote OOP code properly. 
-
-- [ ] Optimised code for performance
-
-The function 'SudokuSolution()' is an enhanced version of [ leetcode - Sudoku solver ]( https://leetcode.com/problems/sudoku-solver/ ). My code might not be that optimised in terms of performance. 
-
-- [ ] Rename variable
-
-I wrote this in a rush , some variable is not named properly and are not consistent. rename it with meaningful variable name
-
-- [ ] Testing
-
-Testing is important. Any testing framework is fine but personally prefer bash scripting to test out the function.
-
-- [ ] Better output format
-
-Print it properly? Probably it will be ideal that I could see obvious changes to show the border of 3x3 box.
-
-## No Code
-
-- [ ] documentation 
-
-Provide Documentation on each function on what it does. Please also provide documentation on elaboration on the algorithm especially for *SudokuSolution()* and *initialize()*
-
-# How to start contribute
-
-Please discuss in issues and I will assign the issues to you.
-Once it is assigned, 
-
-1. fork the repo
-2. open a draft Pull Request
-
+# Doing this in concurrency 
 # Special thanks
 
 Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
