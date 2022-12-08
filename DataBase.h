@@ -8,13 +8,12 @@ class DatabaseConnection {
         int exit;
         const char* fpath;
     public: 
-        int createOrOpenDB(const char* fpath);
-        int closeDB();
-        int createTableIfNotExist();
-        int insertData(std::string query);
-        int selectData();
-        int callback(void* NotUsed, int argc, char** argv, char** azColName);
-
+        DatabaseConnection(const char* fpath); // create/open connection
+        ~DatabaseConnection(); // close connection
+        void createTableIfNotExist();
+        void insertData(std::string query);
+        void selectData();
+        void callback(void* NotUsed, int argc, char** argv, char** azColName);
 }
 
 
