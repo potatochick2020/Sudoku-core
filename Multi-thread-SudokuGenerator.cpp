@@ -5,12 +5,13 @@
 #include <chrono>    
 #include <vector>   
 
-void generateSudokuAndInsertTask(int x){
-    for (int i = 0; i<125;i++){ 
-        Sudoku sudoku.initialize(); 
+void generateSudokuAndInsertTask(int x,DatabaseConnection DB){
+    for (int i = 0; i<25;i++){ 
+        Sudoku sudoku;
+        sudoku.initialize(); 
         string to_insert = sudoku.getFlattenBoard();
-        cout<<"Insert in Thread "<<x<<" : "<<to_insert<<endl;
-        DatabaseConnection::insertData(dir,"INSERT INTO Sudoku (SudokuValue) Values ('"+to_insert+"');"); // uncomment the deleteData above to avoid duplicates
+        cout<<" Thread "<<x<<" : ";
+        DB.insertData("INSERT INTO Sudoku (SudokuValue) Values ('"+to_insert+"');"); // uncomment the deleteData above to avoid duplicates
     }
 }
 
@@ -18,8 +19,9 @@ int main()
 {
     //connect to database
     const char* dir = R"(./Database/SudokuDatabase.db)";
-    DatabaseConnection::DatabaseConnection(dir)
-
+    auto DB = DatabaseConnection(dir);
+    DB.createTableIfNotExist();
+    sleep(5);
     //Start time counting 
     auto t1 = std::chrono::high_resolution_clock::now();
 
@@ -31,7 +33,7 @@ int main()
     //create thread and push to vector
     //generate and insert 125 sudoku each thread, 125 * 4 = 500 sudoku in total
     for (int i = 0;i<4;i++){
-        threadList.push_back(std::thread(generateSudokuAndInsertTask,i));
+        threadList.push_back(std::thread(generateSudokuAndInsertTask,i,DB));
     }   
 
     for (auto& th : threadList) {
@@ -48,9 +50,8 @@ int main()
     std::cout << "\x1b[32m Used Time:" << ms_double.count() << "ms \x1b[0m \n";
 
     //disconnect database
-    DatabaseConnection::~DatabaseConnection() 
+    DB.~DatabaseConnection();
 
 	return 0;
-    
 }
 

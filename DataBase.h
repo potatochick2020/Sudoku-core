@@ -11,10 +11,10 @@ class DatabaseConnection {
         DatabaseConnection(const char* fpath); // create/open connection
         ~DatabaseConnection(); // close connection
         void createTableIfNotExist();
-        void insertData(std::string query);
+        void insertData(std::string sql);
         void selectData();
         void callback(void* NotUsed, int argc, char** argv, char** azColName);
-}
+};
 
 
 
