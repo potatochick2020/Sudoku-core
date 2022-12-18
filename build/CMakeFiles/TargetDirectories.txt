@@ -1,3 +1,0 @@
-/Users/akatsuki/Documents/GitHub/Sudoku-core/build/CMakeFiles/main.dir
-/Users/akatsuki/Documents/GitHub/Sudoku-core/build/CMakeFiles/edit_cache.dir
-/Users/akatsuki/Documents/GitHub/Sudoku-core/build/CMakeFiles/rebuild_cache.dir
