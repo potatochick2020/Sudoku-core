@@ -31,7 +31,7 @@ void DatabaseConnection::createTableIfNotExist()
 		exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
 		
 		if (exit != SQLITE_OK) {
-			std::cerr << "Error in createTable function." << std::endl;
+			std::cerr << "Error in createTable function :"<<*messageError << std::endl; 
 			sqlite3_free(messageError);
 		} 
 		

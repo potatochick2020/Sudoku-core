@@ -7,7 +7,7 @@ void generateSudokuAndInsertTask_use_ATOMIC(int x,DatabaseConnection DB,atomic<i
         Sudoku sudoku;
         sudoku.initialize(); 
         string to_insert = sudoku.getFlattenBoard();
-        // cout<<" Thread "<<x<<" : ";
+        cout<<" Thread "<<x<<" : "<<"INSERT INTO Sudoku (SudokuValue) Values ('"+to_insert+"');"<<endl;
         DB.insertData("INSERT INTO Sudoku (SudokuValue) Values ('"+to_insert+"');")==0? successTask.fetch_add(1):failTask.fetch_add(1); // uncomment the deleteData above to avoid duplicates
     }
 }
@@ -15,8 +15,7 @@ void generateSudokuAndInsertTask_use_MUTEX(int x,DatabaseConnection DB, std::mut
     for (int i = 0; i<15;i++){ 
         Sudoku sudoku;
         sudoku.initialize(); 
-        string to_insert = sudoku.getFlattenBoard();
-        // cout<<" Thread "<<x<<" : ";
+        string to_insert = sudoku.getFlattenBoard(); 
         if (DB.insertData("INSERT INTO Sudoku (SudokuValue) Values ('"+to_insert+"');") == 0){
             successTask_mutex.lock();
             successTask++;
@@ -41,7 +40,7 @@ void multi_thread_sudoku_generator()
 {
     //connect to database
     std::cout<<"Multi Thread Generator"<<std::endl;
-    const char* dir = R"(./Database/SudokuDatabase.db)";
+    const char* dir = R"(../Database/SudokuDatabase.db)";
     auto DB = DatabaseConnection(dir);
     DB.createTableIfNotExist(); 
     //Start time counting 

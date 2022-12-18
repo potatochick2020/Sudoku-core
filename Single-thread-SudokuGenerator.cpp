@@ -4,7 +4,7 @@ void single_thread_sudoku_generator()
 {  
     std::cout<<"Single Thread Generator"<<std::endl;
     //connect to database
-    const char* dir = R"(./Database/SudokuDatabase.db)";
+    const char* dir = R"(../Database/SudokuDatabase.db)";
     auto DB = DatabaseConnection(dir);
     DB.createTableIfNotExist(); 
 
