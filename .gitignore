@@ -431,3 +431,9 @@ FodyWeavers.xsd
 *.sln.iml
 
 *.vscode
+
+./build
+
+.exe
+
+Executables
