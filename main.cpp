@@ -1,9 +1,13 @@
-#include "Sudoku.h"
-
+#include "Sudoku.h" 
+#include "Mode.h"
+#include "Multi-thread-SudokuGenerator.h"
+#include "Single-thread-SudokuGenerator.h"
 int main()
 {
-	Sudoku sudoku;
-	sudoku.initialize();
-	sudoku.drawBoard();
+	#ifdef MULTI_THREAD 
+		multi_thread_sudoku_generator();
+	#elif defined(SINGLE_THREAD)
+		single_thread_sudoku_generator();
+	#endif 
 }
 

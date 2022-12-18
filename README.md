@@ -4,8 +4,11 @@ A C++ library for generating, validating, solving, checking, etc Sudoku puzzle.
 # Installation 
 
 ```
-//to edit
+clang++ -std="c++20" -o Multi-thread-SudokuGenerator Multi-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
 
+clang++ -std="c++20" -o Single-thread-SudokuGenerator Single-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
+
+clang++ -std="c++20" -o main main.cpp Multi-thread-SudokuGenerator.cpp Single-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
 ```
 
 # To Do

@@ -11,10 +11,10 @@ DatabaseConnection::DatabaseConnection(const char* s)
 	sqlite3* temp;
 	DB = temp; 
 	sqlite3_initialize();
-	exit = sqlite3_open(s, &DB);
+	exit = sqlite3_open(s, &DB); 
 }
 
-DatabaseConnection::~DatabaseConnection(){
+void DatabaseConnection::closeConnection(){
 	sqlite3_close(DB);
 }
 
@@ -33,9 +33,8 @@ void DatabaseConnection::createTableIfNotExist()
 		if (exit != SQLITE_OK) {
 			std::cerr << "Error in createTable function." << std::endl;
 			sqlite3_free(messageError);
-		}
-		else
-			std::cout << "Table created if not exist Successfully" << std::endl; 
+		} 
+		
 	}
 	catch (const std::exception& e)
 	{
@@ -43,20 +42,19 @@ void DatabaseConnection::createTableIfNotExist()
 	} 
 }
 
-void DatabaseConnection::insertData(std::string sql)
+int DatabaseConnection::insertData(std::string sql)
 { 
 	char* messageError;
 	std::string temp;
-    std::cout<<sql<<std::endl; 
+    // std::cout<<sql<<std::endl; 
 	/* An open database, SQL to be evaluated, Callback function, 1st argument to callback, Error msg written here */
 	exit = sqlite3_exec(DB, sql.c_str(), NULL , 0, &messageError);
 	
 	if (exit != SQLITE_OK) { 
-		std::cout<< "Error in insertData function :"<<exit<< std::endl;
-		sqlite3_free(messageError);
+		return 1;
+	} else {
+		return 0;
 	}
-	else
-		std::cout << "Records inserted Successfully!" << std::endl;
  
 }
 
