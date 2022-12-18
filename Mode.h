@@ -1,4 +1,3 @@
-#define DEBUG
 //if use ATOMIC to calculate success task and fail task insertion
 
 // #define _use_ATOMIC
@@ -17,10 +16,6 @@
 #endif
 
 // ---- please dont edit the code bellow this line -----//
-
-// ---- to implement ----//
-// #define _use_threadsafe_sqlquery_scheduler
-// #define _use_SQLITE3_default_scheduler
 
 // ----- if default implementation
 

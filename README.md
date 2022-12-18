@@ -2,25 +2,47 @@
 A C++ library for generating, validating, solving, checking, etc Sudoku puzzle. 
 
 # Installation 
-
+Build the project: 
 ```
-clang++ -std="c++20" -o Multi-thread-SudokuGenerator Multi-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
-
-clang++ -std="c++20" -o Single-thread-SudokuGenerator Single-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
-
-clang++ -std="c++20" -o main main.cpp Multi-thread-SudokuGenerator.cpp Single-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp -l sqlite3
+mkdir build
+cd build
+cmake ..
+make
+./sudokugenerator
 ```
 
-# To Do
+Rebuild the project
+```
+cd build
+make clean
+make
+```
 
-finish threadsafe sql queue
-put this in private of database connection
+# Option
 
-write test  
-https://github.com/CS144/sponge/blob/lab1-startercode/CMakeLists.txt
-https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html
+Can choose between multi-thread, single-thread in sudoku generation
 
-# Doing this in concurrency 
+Can choose between using atomic , using mutex and lock , using vector<int> and sum it to calculate total fail and success insertion during multi-thread mode
+
+In `Mode.h`
+ ```cpp
+ 
+//choose 1 among 3 of it 
+#define _use_ATOMIC 
+#define _use_MUTEX
+#define _use_INT
+
+// Choose 1 among 2 of it 
+
+//Single Thread
+#define SINGLE_THREAD
+//Multi thread
+#define MULTI_THREAD
+#ifdef MULTI_THREAD 
+    #define NUMBER_OF_THREADS 6
+#endif
+
+ ```
 # Special thanks
 
 Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
