@@ -1,17 +1,24 @@
-#include "DataBase.h"
+#include "DataBase.hpp"
 
-DatabaseConnection::DatabaseConnection(const char* s)
+DatabaseConnection::DatabaseConnection(const char* path)
 {
-    if (sqlite3_threadsafe() > 0) {
-        int retCode = sqlite3_config(SQLITE_CONFIG_SERIALIZED); 
-    } else {
-        std::cout<<"not safe";
-    }
 
-	sqlite3* temp;
-	DB = temp; 
-	sqlite3_initialize();
-	exit = sqlite3_open(s, &DB); 
+	std::ifstream file; 
+    file.open(path);
+	if (file){
+		fpath = path;  
+		if (sqlite3_threadsafe() > 0) {
+			int retCode = sqlite3_config(SQLITE_CONFIG_SERIALIZED); 
+		} else {
+			std::cout<<"not safe";
+		}
+	
+		sqlite3_initialize();
+		exit = sqlite3_open(fpath, &DB); 
+	} else {
+		exit = SQLITE_NOTFOUND; 
+	}
+	
 }
 
 void DatabaseConnection::closeConnection(){
@@ -42,10 +49,9 @@ void DatabaseConnection::createTableIfNotExist()
 	} 
 }
 
-int DatabaseConnection::insertData(std::string sql)
+int DatabaseConnection::insertData(const std::string& sql)
 { 
-	char* messageError;
-	std::string temp;
+	char* messageError; 
     // std::cout<<sql<<std::endl; 
 	/* An open database, SQL to be evaluated, Callback function, 1st argument to callback, Error msg written here */
 	exit = sqlite3_exec(DB, sql.c_str(), NULL , 0, &messageError);
@@ -57,36 +63,4 @@ int DatabaseConnection::insertData(std::string sql)
 	}
  
 }
-
-void DatabaseConnection::selectData()
-{ 
-	char* messageError;
-
-	std::string sql = "SELECT * FROM Sudoku;";
  
-	/* An open database, SQL to be evaluated, Callback function, 1st argument to callback, Error msg written here*/
-	exit = sqlite3_exec(DB, sql.c_str(), NULL, NULL, &messageError);
-
-	if (exit != SQLITE_OK) {
-		std::cerr << "Error in selectData function." << std::endl;
-		sqlite3_free(messageError);
-	}
-	else
-		std::cout << "Records selected Successfully!" << std::endl;
- 
-}
-
-// retrieve contents of database used by selectData()
-/* argc: holds the number of results, argv: holds each value in array, azColName: holds each column returned in array, */
-void DatabaseConnection::callback(void* NotUsed, int argc, char** argv, char** azColName)
-{
-	for (int i = 0; i < argc; i++) {
-		// column name and value
-        std::cout.setf(std::ios::fixed);
-		std::cout << azColName[i] << ": " << argv[i] << std::endl;
-	}
-
-	std::cout << std::endl;
- 
-}
-

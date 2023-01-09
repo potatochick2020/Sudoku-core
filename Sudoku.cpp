@@ -1,6 +1,4 @@
-#include "Sudoku.h"
-
-Sudoku::Sudoku(int boardHeight, int boardWidth) : Board(boardHeight, boardWidth) {}
+#include "Sudoku.hpp"
 
 bool Sudoku::isValid()
 {
@@ -205,9 +203,9 @@ void Sudoku::initialize(int difficulty)
 void Sudoku::drawBoard()
 {
 	// this implementation done by @AshishRaikwar1290
-	for (int row = 0; row < boardHeight; row++)
+	for (int row = 0; row < 9; row++)
 	{
-		for (int col = 0; col < boardHeight; col++)
+		for (int col = 0; col < 9; col++)
 		{
 			if (col == 3 || col == 6)
 				cout << " | ";
@@ -216,9 +214,29 @@ void Sudoku::drawBoard()
 		if (row == 2 || row == 5)
 		{
 			cout << endl;
-			for (int i = 0; i < boardHeight; i++)
+			for (int i = 0; i < 9; i++)
 				cout << "---";
 		}
 		cout << endl;
 	}
 }
+
+void Sudoku::setBoard(const std::vector<std::vector<int>>& newBoard) {
+	board = newBoard;
+}
+
+const std::vector<std::vector<int>>& Sudoku::getBoard(void)
+{
+	return std::ref(board);
+};
+
+const std::string& Sudoku::getFlattenBoard(void)
+{ 
+	std::string flattenboard;
+	for (auto rowdata : board){ 
+		for (auto cell : rowdata){ 
+			flattenboard += std::to_string(cell);
+		}  
+	}  
+	return std::ref(flattenboard);
+};

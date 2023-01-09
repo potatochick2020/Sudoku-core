@@ -9,7 +9,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 # Add the source files
-add_executable(sudokugenerator main.cpp Multi-thread-SudokuGenerator.cpp Single-thread-SudokuGenerator.cpp DataBase.cpp Sudoku.cpp Board.cpp)
+add_executable(sudokugenerator main.cpp SudokuGenerator.cpp DataBase.cpp Sudoku.cpp ) 
+add_executable(sudokugenerator_test test.cpp SudokuGenerator.cpp DataBase.cpp Sudoku.cpp ) 
 
-# Link the sqlite3 library
-target_link_libraries(sudokugenerator sqlite3)
+find_package(GTest REQUIRED)
+find_package(benchmark REQUIRED)
+# Link the sqlite3 and benchmark library
+target_link_libraries(sudokugenerator sqlite3 benchmark::benchmark GTest::gtest GTest::gtest_main)
+target_link_libraries(sudokugenerator_test sqlite3 benchmark::benchmark GTest::gtest GTest::gtest_main)

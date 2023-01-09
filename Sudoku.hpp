@@ -1,4 +1,3 @@
-#pragma once
 #include <random>
 #include <algorithm>
 #include <iterator>
@@ -9,29 +8,34 @@
 #include <stack>
 #include <map>
 #include <numeric>
-
-#include "Board.h"
+ 
 
 #define SHUFFLE(x) shuffle(x.begin(), x.end(), mt19937{ random_device{}() });
 #define CANDIDATE_ARRAY { 1, 2, 3, 4, 5, 6, 7, 8, 0 }
 
 using namespace std;
 
-class Sudoku : public Board
+class Sudoku  
 {
 private:
 	bool GenerateSudoku(void);
-public:
-	Sudoku(int boardHeight = 9, int boardWidth = 9);
-	// default argument only in decleration
-	void initialize(int difficulty = 3);
-	//overloading for a Board::setBoard 
-	void setBoard(int, int, int);
-	void setBoard(vector<vector<int>>);
-	virtual void drawBoard();
+	std::vector<std::vector<int>> board;
+public: 
+	Sudoku():board( std::vector<std::vector<int>> (9, std::vector<int>(9)) ){};
+	void initialize(int difficulty = 3); 
+	void drawBoard();
 	bool isCorrect(void);
 	bool isComplete(void);
 	bool isValid(void);
 	bool isPlacable(int, int, int);
 	int SudokuSolution(void);
+	const std::vector<std::vector<int>>& getBoard();
+	const std::string& getFlattenBoard();
+
+	//set board with a complete board
+	void setBoard(const std::vector<std::vector<int>>& newBoard);
+
+	//set board with only one cell
+	void setBoard(int, int, int); 
 };
+
