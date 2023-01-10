@@ -21,7 +21,9 @@ private:
 	bool GenerateSudoku(void);
 	std::vector<std::vector<int>> board;
 public: 
-	Sudoku():board( std::vector<std::vector<int>> (9, std::vector<int>(9)) ){};
+	Sudoku(){
+		initialize();
+	};
 	void initialize(int difficulty = 3); 
 	void drawBoard();
 	bool isCorrect(void);

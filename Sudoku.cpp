@@ -176,8 +176,7 @@ void Sudoku::initialize(int difficulty)
 	vector<int> rowsCandidates = CANDIDATE_ARRAY;
 	SHUFFLE(rowsCandidates);
 	vector<int> colsCandidates = CANDIDATE_ARRAY;
-	SHUFFLE(colsCandidates);
-	pair<pair<int, int>, int> backup = {{rowsCandidates[0], colsCandidates[0]}, board[rowsCandidates[0]][colsCandidates[0]]};
+	SHUFFLE(colsCandidates);  
 	board[rowsCandidates[0]][colsCandidates[0]] = 0;
 
 	int attempt = 0;
@@ -190,9 +189,9 @@ void Sudoku::initialize(int difficulty)
 		colsCandidates = CANDIDATE_ARRAY;
 		SHUFFLE(colsCandidates);
 
-		backup = {{rowsCandidates[0], colsCandidates[0]}, board[rowsCandidates[0]][colsCandidates[0]]};
+		pair<pair<int, int>, int> backup = {{rowsCandidates[0], colsCandidates[0]}, board[rowsCandidates[0]][colsCandidates[0]]};
 		board[rowsCandidates[0]][colsCandidates[0]] = 0;
-		if (SudokuSolution() > 1)
+		if (SudokuSolution() != 1 )
 		{
 			board[backup.first.first][backup.first.second] = backup.second;
 			attempt++;
