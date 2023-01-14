@@ -32,7 +32,9 @@ void generateSudokuAndInsertTask_use_INT(int x,DatabaseConnection DB,std::vector
     }
 }
 
-void SudokuGenerator_SingleThread::generate(){
+
+void single_thread_sudoku_generator()
+{    
     //connect to database
     const char* dir = R"(../Database/SudokuDatabase.db)";
     auto DB = DatabaseConnection(dir);
@@ -50,9 +52,11 @@ void SudokuGenerator_SingleThread::generate(){
  
     //disconnect database
     DB.closeConnection();
-} 
+    
+}
 
-void SudokuGenerator_MultiThread_ATOMIC::generate(){
+void multi_thread_sudoku_generator_using_ATOMIC()
+{
     int NUMBER_OF_THREADS = std::thread::hardware_concurrency();
     //connect to database 
     const char* dir = R"(../Database/SudokuDatabase.db)";
@@ -81,10 +85,12 @@ void SudokuGenerator_MultiThread_ATOMIC::generate(){
       
     //disconnect database
     DB.closeConnection(); 
-} 
+}
 
-void SudokuGenerator_MultiThread_MUTEX ::generate(){
-     int NUMBER_OF_THREADS = std::thread::hardware_concurrency();
+
+void multi_thread_sudoku_generator_using_MUTEX()
+{
+    int NUMBER_OF_THREADS = std::thread::hardware_concurrency();
     //connect to database 
     const char* dir = R"(../Database/SudokuDatabase.db)";
     auto DB = DatabaseConnection(dir);
@@ -114,10 +120,10 @@ void SudokuGenerator_MultiThread_MUTEX ::generate(){
      
     //disconnect database
     DB.closeConnection(); 
-} 
- 
+}
 
-void SudokuGenerator_MultiThread_INT::generate()
+
+void multi_thread_sudoku_generator_using_INT()
 {
     int NUMBER_OF_THREADS = std::thread::hardware_concurrency();
     //connect to database 
@@ -127,6 +133,8 @@ void SudokuGenerator_MultiThread_INT::generate()
 
     //create vector to hold thread
     vector<std::thread> threadList; 
+    
+
 
     //create thread and push to vector
     //generate and insert 25 sudoku each thread, 25 * 4 = 100 sudoku in total
