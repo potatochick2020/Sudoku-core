@@ -1,5 +1,68 @@
-# Sudoku
+# Sudoku-Core
 A C++ library for generating, validating, solving, checking, etc Sudoku puzzle. 
+
+# Time
+From 23 November 2022 to Jan 10 2023  
+Around 18 hours
+
+# What I learn ?
+
+My first object-oriented programming project using the C++ programming language. This project introduces me to basic concepts of threading, providing me with my first experience working with a slightly larger codebase.
+
+## First time
+- use cmake build system
+- use external library sqlite3 , google benchmark , google test(did not use it propertly)
+- use threading in C++
+
+## Area of improvement
+- [x] virtual function is actually a virtual pointer pointing to the vtable which will slow down the program, any class with at least 1 pure virtual function is a abstract class which cannot be declared as an object in c++
+- [x] Access level of `private` vs `public` vs `protected`
+- [x] `using namespace std` should be avoided as this is pulling unnecessary header to the program
+- [x] config should be store in a config/ OOP member but not using preprocessor to avoid generate different binaries
+- [ ] Unit test is not proper
+- [ ] OOP should be use for further development and 
+- [ ] Avoid hardcode syntax e.g. sql statement
+
+## How to improve in next project
+- [ ] Plan out testing before start developing process
+- [ ] Plan out OOp structure before start developing process
+
+## Further stuff to learn
+- [ ] Benchmark with threading
+- [ ] unique_lock vs scoped_lock vs lock_guard
+- [ ] how does concurrency work in the perspective of operating system? 
+- [ ] how does concurrency work in the perspective of computer system? 
+## Difficulties
+I faced a difficult when I am designing the backtracking algorithm when generating a sudoku.
+## How I overcome 
+I asked in the community for feedback, and gratefully there are mentor willing to provide some guidiance.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Installation 
 Build the project: 
@@ -139,18 +202,6 @@ void Sudoku::initialize(int difficulty)
 	}
 };
 ```
-
-# Object-Oriented PRogramming
-There are 2 Class throughout the project
-
-## **Sudoku** class
-
-## **Sudoku-generator** class
-Can choose between multi-thread, single-thread in sudoku generation
-
-Can choose between using atomic , using mutex and lock , using vector<int> and sum it to calculate total fail and success insertion during multi-thread mode
-
-
 # Special thanks
 
 Speical thanks to めぐ in Leetcode Warrior community to provide help in fixing a bug when designing the algorithm of *SudokuSolution()* which return the number of unique solution that a sudoku board has.
