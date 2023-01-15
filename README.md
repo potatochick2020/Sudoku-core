@@ -2,9 +2,8 @@
 A C++ library for generating, validating, solving, checking, etc Sudoku puzzle. 
 
 # Time
-From 23 November 2022 to Jan 10 2023  
-Around 18 hours
-
+From 23 November 2022 to Jan 10 2023, Around 18 hours in Total
+![Alt text](time.png)
 # What I learn ?
 
 My first object-oriented programming project using the C++ programming language. This project introduces me to basic concepts of threading, providing me with my first experience working with a slightly larger codebase.
